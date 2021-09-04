@@ -1,45 +1,23 @@
-//automated slide transitions
-//add text to the slides
-//show the user which slide they are on
+let slideIndex = 0;
+showSlides();
 
-const slides = document.getElementsByClassName('carousel-item');
-let slidePosition = 0;
-const totalSlides = slides.length;
-
-document
-	.getElementById('carousel-button-next')
-	.addEventListener('click', moveToNextSlide);
-document
-	.getElementById('carousel-button-prev')
-	.addEventListener('click', moveToPrevSlide);
-
-function hideAllSlides() {
-	for (let slide of slides) {
-		slide.classList.remove('carousel-item-visible');
-		slide.classList.add('carousel-item-hidden');
+function showSlides() {
+	let i;
+	const slides = document.getElementsByClassName('mySlides');
+	const dots = document.getElementsByClassName('dot');
+	for (i = 0; i < slides.length; i++) {
+		// @ts-ignore
+		slides[i].style.display = 'none';
 	}
-}
-
-function moveToNextSlide() {
-	hideAllSlides();
-
-	if (slidePosition === totalSlides - 1) {
-		slidePosition = 0;
-	} else {
-		slidePosition++;
+	slideIndex++;
+	if (slideIndex > slides.length) {
+		slideIndex = 1;
 	}
-
-	slides[slidePosition].classList.add('carousel-item-visible');
-}
-
-function moveToPrevSlide() {
-	hideAllSlides();
-
-	if (slidePosition === 0) {
-		slidePosition = totalSlides - 1;
-	} else {
-		slidePosition--;
+	for (i = 0; i < dots.length; i++) {
+		dots[i].className = dots[i].className.replace(' active', '');
 	}
-
-	slides[slidePosition].classList.add('carousel-item-visible');
+	// @ts-ignore
+	slides[slideIndex - 1].style.display = 'block';
+	dots[slideIndex - 1].className += ' active';
+	setTimeout(showSlides, 3000); // Change image every 3 seconds
 }
